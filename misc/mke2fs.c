@@ -2808,6 +2808,10 @@ int main (int argc, char *argv[])
 		 EXT3_FEATURE_COMPAT_HAS_JOURNAL)))
 		journal_blocks = figure_journal_size(journal_size, fs);
 
+
+    printf("\nPress ENTER to format %s\n", device_name);
+    fgetc(stdin);
+
 	/* Can't undo discard ... */
 	if (!noaction && discard && dev_size && (io_ptr != undo_io_manager)) {
 		retval = mke2fs_discard_device(fs);

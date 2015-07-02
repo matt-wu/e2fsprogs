@@ -1645,6 +1645,9 @@ extern void ext2fs_swap_mmp(struct mmp_struct *mmp);
 extern int ext2fs_open_file(const char *pathname, int flags, mode_t mode);
 extern int ext2fs_stat(const char *path, ext2fs_struct_stat *buf);
 extern int ext2fs_fstat(int fd, ext2fs_struct_stat *buf);
+extern int ext2fs_close_file(int fd);
+#define ext2fs_open_device ext2fs_open_file
+#define ext2fs_close_device ext2fs_close_file
 
 /* valid_blk.c */
 extern int ext2fs_inode_has_valid_blocks(struct ext2_inode *inode);

@@ -136,7 +136,7 @@ extern errcode_t io_channel_cache_readahead(io_channel io,
 					    unsigned long long block,
 					    unsigned long long count);
 
-/* unix_io.c */
+/* nt_io.c */
 extern io_manager unix_io_manager;
 
 /* undo_io.c */

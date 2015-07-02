@@ -1426,7 +1426,7 @@ static void install_image(char *device, char *image_fn, int type)
 		exit(1);
 	}
 
-	close(fd);
+	ext2fs_close_file(fd);
 	ext2fs_close_free(&fs);
 }
 

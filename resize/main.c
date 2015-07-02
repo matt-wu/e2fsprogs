@@ -371,6 +371,7 @@ int main (int argc, char ** argv)
 		exit(1);
 	}
 
+#if 0
 	if (flush) {
 		retval = ext2fs_sync_device(fd, 1);
 		if (retval) {
@@ -380,9 +381,10 @@ int main (int argc, char ** argv)
 			exit(1);
 		}
 	}
+#endif
 
 	if (!S_ISREG(st_buf.st_mode )) {
-		close(fd);
+		ext2fs_close_file(fd);
 		fd = -1;
 	}
 

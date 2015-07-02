@@ -55,6 +55,7 @@ extern int optind;
 #include "../version.h"
 #include "../misc/plausible.h"
 
+
 /* Command line options */
 static int cflag;		/* check disk */
 static int show_version_only;
@@ -1027,7 +1028,7 @@ static errcode_t PRS(int argc, char *argv[], e2fsck_t *ret_ctx)
 		ctx->options &= ~E2F_OPT_DISCARD;
 
 	if (flush) {
-		fd = open(ctx->filesystem_name, O_RDONLY, 0);
+		fd = ext2fs_open_device(ctx->filesystem_name, O_RDONLY, 0);
 		if (fd < 0) {
 			com_err("open", errno,
 				_("while opening %s for flushing"),
@@ -1040,7 +1041,7 @@ static errcode_t PRS(int argc, char *argv[], e2fsck_t *ret_ctx)
 				ctx->filesystem_name);
 			fatal_error(ctx, 0);
 		}
-		close(fd);
+		ext2fs_close_device(fd);
 	}
 	if (cflag && bad_blocks_file) {
 		fprintf(stderr, "%s", _("The -c and the -l/-L options may not "

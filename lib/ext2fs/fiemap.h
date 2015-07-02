@@ -22,7 +22,7 @@ struct fiemap_extent {
 	__u32 fe_reserved[3];
 };
 
-struct fiemap {
+typedef struct fiemap {
 	__u64 fm_start;		/* logical offset (inclusive) at
 				 * which to start mapping (in) */
 	__u64 fm_length;	/* logical length of mapping which
@@ -32,10 +32,10 @@ struct fiemap {
 	__u32 fm_extent_count;  /* size of fm_extents array (in) */
 	__u32 fm_reserved;
 	struct fiemap_extent fm_extents[0]; /* array of mapped extents (out) */
-};
+}fiemap_t;
 
 #ifndef FS_IOC_FIEMAP
-#define FS_IOC_FIEMAP	_IOWR('f', 11, struct fiemap)
+//#define FS_IOC_FIEMAP	_IOWR('f', 11, fiemap_t)
 #endif
 
 #define FIEMAP_MAX_OFFSET	(~0ULL)
