@@ -1,4 +1,303 @@
-	This is the new version (1.42.13) of the second extended file
+e2fsprogs for Windows (Cygwin)
+    ported by Matt Wu <matt at ext2fsd.com>
+    http://github.com/matt-wu/e2fsprogs
+
+
+Builing e2fsprogs for Windows under Cygwin:
+
+1,  start cygwin console: (cygwin.bat)
+    make sure you have cygwin gcc & make installed
+2,  run make or make.sh (sh -x ./make.sh)
+
+
+Run e2fsprogs utils:
+
+1,  Administrator priviledge is required to access partitions or volumes.
+2,  Block device name could be /dev/sdX or drive letter, Windows device
+    *) /dev/sda4:                       the 4th partition of harddisk 0
+    *) \Device\Harddisk0\Partition4:    Windows partition device: 4th of 1st disk
+    *) X:                               Windows drive letter with ':'
+    *) \Device\HarddiskVolume6:         Windows volume device
+
+Examples:
+
+D:\Projects\e2fsprogs\bin\x86_64>blkid
+/dev/sda1: UUID="885C30915C307BCE" LABEL="System" TYPE="ntfs"
+/dev/sda2: UUID="72CE5DC3CE5D8071" TYPE="ntfs"
+/dev/sda3: UUID="84033382-ccee-4b17-9359-4fe9be17907c" TYPE="ext4"
+/dev/sda4: UUID="9ce46d81-e69d-4007-aba1-ea9f45d80ba4" TYPE="ext4"
+/dev/sda5: TYPE="swap" UUID="3da1a75f-9d23-46b5-aa3d-0029d54faf79"
+/dev/sda6: UUID="F2ECCEA1ECCE6009" TYPE="ntfs"
+
+D:\Projects\e2fsprogs\bin\x86_64>tune2fs -l /dev/sda3
+tune2fs 1.43-WIP (18-May-2015)
+Filesystem volume name:   <none>
+Last mounted on:          /boot
+Filesystem UUID:          84033382-ccee-4b17-9359-4fe9be17907c
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent flex_bg sparse
+_super large_file huge_file uninit_bg dir_nlink extra_isize
+Filesystem flags:         signed_directory_hash
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              196608
+Block count:              786432
+Reserved block count:     39321
+Free blocks:              746487
+Free inodes:              196306
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Reserved GDT blocks:      191
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         8192
+Inode blocks per group:   512
+Flex block group size:    16
+Filesystem created:       Sat Jun 20 23:25:02 2015
+Last mount time:          Sat Jul  4 12:26:05 2015
+Last write time:          Sat Jul  4 12:42:06 2015
+Mount count:              30
+Maximum mount count:      -1
+Last checked:             Sat Jun 27 19:05:32 2015
+Check interval:           0 (<none>)
+Lifetime writes:          255 MB
+Reserved blocks uid:      0 (user unknown)
+Reserved blocks gid:      0 (group unknown)
+First inode:              11
+Inode size:               256
+Required extra isize:     28
+Desired extra isize:      28
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      9c883ee4-2004-457c-a652-3eebf384b04f
+Journal backup:           inode blocks
+
+D:\Projects\e2fsprogs\bin\x86_64>e2fsck -f -v -n -F /dev/sda3
+e2fsck 1.43-WIP (18-May-2015)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+
+         302 inodes used (0.15%, out of 196608)
+           1 non-contiguous file (0.3%)
+           1 non-contiguous directory (0.3%)
+             # of inodes with ind/dind/tind blocks: 0/0/0
+             Extent depth histogram: 294
+       39945 blocks used (5.08%, out of 786432)
+           0 bad blocks
+           1 large file
+
+         287 regular files
+           6 directories
+           0 character device files
+           0 block device files
+           0 fifos
+           0 links
+           0 symbolic links (0 fast symbolic links)
+           0 sockets
+------------
+         293 files
+
+D:\Projects\e2fsprogs\bin\x86_64>e2fsck -f -v -F /dev/sda3
+e2fsck 1.43-WIP (18-May-2015)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+
+         302 inodes used (0.15%, out of 196608)
+           1 non-contiguous file (0.3%)
+           1 non-contiguous directory (0.3%)
+             # of inodes with ind/dind/tind blocks: 0/0/0
+             Extent depth histogram: 294
+       39945 blocks used (5.08%, out of 786432)
+           0 bad blocks
+           1 large file
+
+         287 regular files
+           6 directories
+           0 character device files
+           0 block device files
+           0 fifos
+           0 links
+           0 symbolic links (0 fast symbolic links)
+           0 sockets
+------------
+         293 files
+
+D:\Projects\e2fsprogs\bin\x86_64>e2fsck -f -v -F \Device\Harddisk0\Partition3
+e2fsck 1.43-WIP (18-May-2015)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+
+         302 inodes used (0.15%, out of 196608)
+           1 non-contiguous file (0.3%)
+           1 non-contiguous directory (0.3%)
+             # of inodes with ind/dind/tind blocks: 0/0/0
+             Extent depth histogram: 294
+       39945 blocks used (5.08%, out of 786432)
+           0 bad blocks
+           1 large file
+
+         287 regular files
+           6 directories
+           0 character device files
+           0 block device files
+           0 fifos
+           0 links
+           0 symbolic links (0 fast symbolic links)
+           0 sockets
+------------
+         293 files
+
+D:\Projects\e2fsprogs\bin\x86_64>tune2fs -l \Device\Harddisk0\Partition3
+tune2fs 1.43-WIP (18-May-2015)
+Filesystem volume name:   <none>
+Last mounted on:          /boot
+Filesystem UUID:          84033382-ccee-4b17-9359-4fe9be17907c
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent flex_bg sparse
+_super large_file huge_file uninit_bg dir_nlink extra_isize
+Filesystem flags:         signed_directory_hash
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              196608
+Block count:              786432
+Reserved block count:     39321
+Free blocks:              746487
+Free inodes:              196306
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Reserved GDT blocks:      191
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         8192
+Inode blocks per group:   512
+Flex block group size:    16
+Filesystem created:       Sat Jun 20 23:25:02 2015
+Last mount time:          Sat Jul  4 12:26:05 2015
+Last write time:          Sat Jul  4 16:24:13 2015
+Mount count:              0
+Maximum mount count:      -1
+Last checked:             Sat Jul  4 16:24:13 2015
+Check interval:           0 (<none>)
+Lifetime writes:          255 MB
+Reserved blocks uid:      0 (user unknown)
+Reserved blocks gid:      0 (group unknown)
+First inode:              11
+Inode size:               256
+Required extra isize:     28
+Desired extra isize:      28
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      9c883ee4-2004-457c-a652-3eebf384b04f
+Journal backup:           inode blocks
+
+D:\Projects\e2fsprogs\bin\x86_64>debugfs \Device\Harddisk0\Partition3
+debugfs 1.43-WIP (18-May-2015)
+debugfs:  ls -l
+      2   40755 (2)      0      0    409623-Jun-2015 18:47 .
+      2   40755 (2)      0      0    409623-Jun-2015 18:47 ..
+     11   40700 (2)      0      0   1638420-Jun-2015 23:25 lost+found
+     13  100600 (1)      0      0   361535817-Apr-2015 08:45 System.map-3.19.0-15-generic
+     14  100600 (1)      0      0   661158417-Apr-2015 08:45 vmlinuz-3.19.0-15-generic
+     15  100644 (1)      0      0   17765617-Apr-2015 08:45 config-3.19.0-15-generic
+     18  100644 (1)      0      0   165892 7-Mar-2015 00:23 memtest86+.elf
+     19  100644 (1)      0      0   166396 7-Mar-2015 00:23 memtest86+_multiboot.bin
+     16   40755 (2)      0      0    4096 4-Jul-2015 12:27 grub
+     12  100644 (1)      0      0   126881517-Apr-2015 08:45 abi-3.19.0-15-generic
+     20  100644 (1)      0      0   2165394023-Jun-2015 18:47 initrd.img-3.19.0-15-generic
+     17  100644 (1)      0      0   164216 7-Mar-2015 00:23 memtest86+.bin
+
+debugfs:  q
+
+D:\Projects\e2fsprogs\bin\x86_64>tune2fs -l e:
+tune2fs 1.43-WIP (18-May-2015)
+Filesystem volume name:   <none>
+Last mounted on:          /mnt
+Filesystem UUID:          1792690e-369f-4db4-b3cf-6ab5dc8c18d3
+Filesystem magic number:  0xEF53
+Filesystem revision #:    1 (dynamic)
+Filesystem features:      has_journal ext_attr resize_inode dir_index filetype extent flex_bg sparse
+_super large_file huge_file uninit_bg dir_nlink extra_isize
+Filesystem flags:         signed_directory_hash
+Default mount options:    user_xattr acl
+Filesystem state:         clean
+Errors behavior:          Continue
+Filesystem OS type:       Linux
+Inode count:              244183040
+Block count:              1953442816
+Reserved block count:     97672140
+Free blocks:              1829025575
+Free inodes:              244103110
+First block:              0
+Block size:               4096
+Fragment size:            4096
+Reserved GDT blocks:      558
+Blocks per group:         32768
+Fragments per group:      32768
+Inodes per group:         4096
+Inode blocks per group:   256
+RAID stride:              16
+RAID stripe width:        16
+Flex block group size:    16
+Filesystem created:       Sat Jun 20 15:57:01 2015
+Last mount time:          Sat Jul  4 12:40:35 2015
+Last write time:          Sat Jul  4 12:42:06 2015
+Mount count:              3
+Maximum mount count:      -1
+Last checked:             Sat Jul  4 12:38:35 2015
+Check interval:           0 (<none>)
+Lifetime writes:          1567 MB
+Reserved blocks uid:      0 (user unknown)
+Reserved blocks gid:      0 (group unknown)
+First inode:              11
+Inode size:               256
+Required extra isize:     28
+Desired extra isize:      28
+Journal inode:            8
+Default directory hash:   half_md4
+Directory Hash Seed:      6a20e1d0-e8c0-40c2-813e-b4902d04092f
+Journal backup:           inode blocks
+
+D:\Projects\e2fsprogs\bin\x86_64>debugfs e:
+debugfs 1.43-WIP (18-May-2015)
+debugfs:  ls -l
+      2   40755 (2)      0      0    4096 4-Jul-2015 12:41 .
+      2   40755 (2)      0      0    4096 4-Jul-2015 12:41 ..
+     11   40700 (2)      0      0   1638420-Jun-2015 15:57 lost+found
+  61453   40755 (2)      0      0    4096 4-Jul-2015 11:59 Boot
+     12   40755 (2)      0      0    409620-Jun-2015 16:01 $RECYCLE.BIN
+  28709   40755 (2)      0      0    4096 7-Oct-2014 13:20 WinDDK
+ 1110030   40755 (2)      0      0    409624-Jun-2015 10:55 System Volume Information
+ 1126408   40755 (2)      0      0    409626-Jun-2015 15:44 Documents
+ 1114114   40755 (2)      0      0    4096 4-Jul-2015 12:01 Vmware
+ 1130499   40755 (2)      0      0    4096 4-Jul-2015 16:12 Works
+ 1118212   40755 (2)      0      0    4096 2-Jul-2015 21:30 kankan
+
+debugfs:  q
+
+D:\Projects\e2fsprogs\bin\x86_64>
+
+
+
+e2fsprogs README:
+
+    This is the new version (1.42.13) of the second extended file
 system management programs.
 
 	From time to time, I release new versions of e2fsprogs, to fix
